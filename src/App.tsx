@@ -1,33 +1,35 @@
-type Question = {
-  text: string;
-  answers: Answer[];
-};
+import { createBrowserRouter, Link, RouterProvider } from 'react-router-dom';
+import { QuestionDetailPage } from './pages/QuestionDetailPage';
+import { QuestionListPage } from './pages/QuestionListPage';
 
-type Answer = {
-  text: string;
-  points: number;
-  revealed: boolean;
-};
-
-const question: Question = {
-  text: 'What is the answer to life, the universe, and everything?',
-  answers: [
-    { text: 'A', points: 42, revealed: false },
-    { text: 'B', points: 34, revealed: false },
-  ],
-};
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: (
+      <div>
+        <div>Family Feud</div>
+        <ul>
+          <li>
+            <Link to="/questions">Question List</Link>
+          </li>
+        </ul>
+      </div>
+    ),
+  },
+  {
+    path: '/questions',
+    element: <QuestionListPage />,
+  },
+  {
+    path: '/questions/:id',
+    element: <QuestionDetailPage />,
+  },
+]);
 
 export default function App() {
   return (
     <div>
-      <h1 className="text-3xl font-bold underline">{question.text}</h1>
-      <ul>
-        {question.answers.map((question) => (
-          <li>
-            {question.text} - {question.points}
-          </li>
-        ))}
-      </ul>
+      <RouterProvider router={router} />
     </div>
   );
 }
