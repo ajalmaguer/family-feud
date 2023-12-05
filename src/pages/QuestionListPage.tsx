@@ -1,11 +1,29 @@
 import { onValue } from 'firebase/database';
-import { FunctionComponent, useEffect } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 import { questionsRef } from '../services/firebaseService';
+import { Link } from 'react-router-dom';
+import { questionDetailPagePath } from './QuestionDetailPage';
+
+export function questionListPagePath() {
+  return `/questions`;
+}
 
 export const QuestionListPage: FunctionComponent<{}> = () => {
+  const [questions, setQuestions] = useState<Question[]>([]);
+
   useEffect(() => {
     const unsubscribe = onValue(questionsRef, (snapshot) => {
-      console.log(JSON.stringify(snapshot.val(), null, 2));
+      const questions = Object.entries(snapshot.val()).map(([key, value]) => {
+        if (typeof value !== 'object') {
+          throw new Error('parsing error');
+        }
+
+        return {
+          ...(value as { text: string; answers: Answer[] }),
+          id: key,
+        };
+      });
+      setQuestions(questions);
     });
 
     function onUnmount() {
@@ -15,5 +33,17 @@ export const QuestionListPage: FunctionComponent<{}> = () => {
     return onUnmount;
   }, []);
 
-  return <div>QuestionListPage works</div>;
+  return (
+    <div>
+      <ul>
+        {questions.map((question) => (
+          <li key={question.id}>
+            <Link to={questionDetailPagePath(question.id)}>
+              {question.text}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 };
