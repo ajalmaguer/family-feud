@@ -14,10 +14,6 @@ export const QuestionListPage: FunctionComponent<{}> = () => {
   useEffect(() => {
     const unsubscribe = onValue(questionsRef, (snapshot) => {
       const questions = Object.entries(snapshot.val()).map(([key, value]) => {
-        if (typeof value !== 'object') {
-          throw new Error('parsing error');
-        }
-
         return {
           ...(value as { text: string; answers: Answer[] }),
           id: key,
