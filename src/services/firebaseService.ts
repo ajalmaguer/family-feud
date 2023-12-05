@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
 // import { getAnalytics } from 'firebase/analytics';
-import { child, get, getDatabase, onValue, ref } from 'firebase/database';
+import { child, getDatabase, ref } from 'firebase/database';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -23,18 +23,3 @@ const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
 const dbRef = ref(getDatabase(app));
 export const questionsRef = child(dbRef, '/family-feud-v1/questions');
-
-export function foobar() {
-  console.log('/family-feud-v1/questions');
-  get(questionsRef)
-    .then((snapshot) => {
-      if (snapshot.exists()) {
-        console.log(snapshot.val());
-      } else {
-        console.log('No data available');
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-}

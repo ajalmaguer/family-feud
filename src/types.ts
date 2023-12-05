@@ -6,5 +6,5 @@ type Question = {
 type Answer = {
   text: string;
   points: number;
-  revealed: boolean;
+  // revealed: boolean;
 };
