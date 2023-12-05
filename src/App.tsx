@@ -1,6 +1,12 @@
 import { createBrowserRouter, Link, RouterProvider } from 'react-router-dom';
-import { QuestionDetailPage } from './pages/QuestionDetailPage';
-import { QuestionListPage } from './pages/QuestionListPage';
+import {
+  QuestionDetailPage,
+  questionDetailPagePath,
+} from './pages/QuestionDetailPage';
+import {
+  QuestionListPage,
+  questionListPagePath,
+} from './pages/QuestionListPage';
 
 const router = createBrowserRouter([
   {
@@ -10,18 +16,18 @@ const router = createBrowserRouter([
         <div>Family Feud</div>
         <ul>
           <li>
-            <Link to="/questions">Question List</Link>
+            <Link to={questionListPagePath()}>Question List</Link>
           </li>
         </ul>
       </div>
     ),
   },
   {
-    path: '/questions',
+    path: questionListPagePath(),
     element: <QuestionListPage />,
   },
   {
-    path: '/questions/:id',
+    path: questionDetailPagePath(':id'),
     element: <QuestionDetailPage />,
   },
 ]);
