@@ -23,3 +23,4 @@ const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
 const dbRef = ref(getDatabase(app));
 export const questionsRef = child(dbRef, '/family-feud-v1/questions');
+export const playersRef = child(dbRef, '/family-feud-v1/players');

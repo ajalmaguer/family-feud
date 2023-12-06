@@ -1,7 +1,7 @@
-import { child, onValue } from 'firebase/database';
+import { child, onValue, set } from 'firebase/database';
 import { FunctionComponent, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { questionsRef } from '../services/firebaseService';
+import { playersRef, questionsRef } from '../services/firebaseService';
 
 export function questionDetailPagePath(id: string) {
   return `/questions/${id}`;
@@ -19,6 +19,7 @@ export const QuestionDetailPage: FunctionComponent<{}> = () => {
     setLoading(true);
 
     const unsubscribe = onValue(child(questionsRef, id), (snapshot) => {
+      console.log('snapshot.val() =', snapshot.val());
       setQuestion(snapshot.val());
       setLoading(false);
     });
@@ -53,6 +54,22 @@ export const QuestionDetailPage: FunctionComponent<{}> = () => {
           </li>
         ))}
       </ul>
+      <button
+        onClick={() => {
+          console.log('?');
+
+          try {
+            console.log('??');
+            set(child(playersRef, 'player1'), {
+              question1: [true, false],
+            });
+          } catch (error) {
+            console.log({ error });
+          }
+        }}
+      >
+        do the thing
+      </button>
     </div>
   );
 };
