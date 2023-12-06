@@ -7,10 +7,15 @@ import {
   QuestionListPage,
   questionListPagePath,
 } from './pages/QuestionListPage';
+import {
+  PlayerQuestionDetailPage,
+  playerQuestionDetailsPagePath,
+} from './pages/PlayerQuestionDetailPage';
 
 const router = createBrowserRouter([
   {
     path: '/',
+    errorElement: <div>Not found</div>,
     element: (
       <div>
         <div>Family Feud</div>
@@ -29,6 +34,10 @@ const router = createBrowserRouter([
   {
     path: questionDetailPagePath(':id'),
     element: <QuestionDetailPage />,
+  },
+  {
+    path: playerQuestionDetailsPagePath(':playerId', ':questionId'),
+    element: <PlayerQuestionDetailPage />,
   },
 ]);
 
