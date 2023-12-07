@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useQuestionDetails } from '../hooks/useQuestionDetails';
 import { playerQuestionDetailsPagePath } from './PlayerQuestionDetailPage';
 import { PlayerIdService } from './playerIdService';
+import { createGame } from './usePlayerQuestion';
 
 export function questionDetailPagePath(id: string) {
   return `/questions/${id}`;
@@ -17,9 +18,15 @@ export const QuestionDetailPage: FunctionComponent<{}> = () => {
   function playGame() {
     let playerId = PlayerIdService.getPlayerId();
 
-    if (!id) {
+    if (!id || !question) {
       return;
     }
+
+    createGame({
+      question,
+      playerId,
+      questionId: id,
+    });
 
     navigate(playerQuestionDetailsPagePath(playerId, id));
   }
