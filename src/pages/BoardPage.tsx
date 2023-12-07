@@ -15,7 +15,37 @@ export const BoardPage: FunctionComponent<{}> = () => {
   const { question } = useQuestionDetails(questionId);
   const { playerQuestion } = usePlayerQuestion({ playerId, questionId });
 
-  console.log(JSON.stringify({ question, playerQuestion }, null, 2));
+  if (!question || !playerQuestion) {
+    return <div>not found</div>;
+  }
 
-  return <div>BoardPage works</div>;
+  const earnedPointes = question.answers.reduce((acc, answer, i) => {
+    if (!playerQuestion.answerStatuses[i]) {
+      return acc;
+    }
+    return acc + answer.points;
+  }, 0);
+
+  return (
+    <div>
+      <ul>
+        {question.answers.map((answer, i) => {
+          const answerStatuses = playerQuestion?.answerStatuses;
+          const answerStatus = answerStatuses && answerStatuses[i];
+          return (
+            <li key={i}>
+              {answerStatus ? (
+                <>
+                  {answer.text} | {answer.points}
+                </>
+              ) : (
+                <>hidden</>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+      <div>earned points: {earnedPointes}</div>
+    </div>
+  );
 };
