@@ -43,8 +43,8 @@ export function flipAnswerStatus(params: {
 }
 
 export function usePlayerQuestion(params: {
-  playerId: string | undefined;
-  questionId: string | undefined;
+  playerId: string | undefined | null;
+  questionId: string | undefined | null;
 }) {
   const { playerId, questionId } = params;
   const [playerQuestion, setPlayerQuestion] = useState<PlayerQuestion | null>(

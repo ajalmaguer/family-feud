@@ -2,7 +2,7 @@ import { FunctionComponent } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuestionDetails } from '../hooks/useQuestionDetails';
 import { playerQuestionDetailsPagePath } from './PlayerQuestionDetailPage';
-import { PlayerIdService } from './playerIdService';
+import { PlayerIdService } from '../services/playerIdService';
 import { createGame } from './usePlayerQuestion';
 
 export function questionDetailPagePath(id: string) {

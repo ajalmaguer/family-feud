@@ -11,6 +11,7 @@ import {
   PlayerQuestionDetailPage,
   playerQuestionDetailsPagePath,
 } from './pages/PlayerQuestionDetailPage';
+import { BoardPage } from './pages/BoardPage';
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
   {
     path: playerQuestionDetailsPagePath(':playerId', ':questionId'),
     element: <PlayerQuestionDetailPage />,
+  },
+  {
+    path: 'board',
+    element: <BoardPage />,
   },
 ]);
 

@@ -1,4 +1,4 @@
-import { LocalStorageService } from '../services/localStorageService';
+import { LocalStorageService } from './localStorageService';
 
 function getPlayerId() {
   const PLAYER_ID_KEY = 'playerId';

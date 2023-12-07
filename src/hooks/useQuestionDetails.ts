@@ -2,7 +2,7 @@ import { onValue, child } from 'firebase/database';
 import { useState, useEffect } from 'react';
 import { questionsRef } from '../services/firebaseService';
 
-export function useQuestionDetails(id: string | undefined) {
+export function useQuestionDetails(id: string | undefined | null) {
   const [question, setQuestion] = useState<Question>();
   const [loading, setLoading] = useState(false);
   useEffect(() => {
@@ -12,7 +12,6 @@ export function useQuestionDetails(id: string | undefined) {
     setLoading(true);
 
     const unsubscribe = onValue(child(questionsRef, id), (snapshot) => {
-      console.log('snapshot.val() =', snapshot.val());
       setQuestion(snapshot.val());
       setLoading(false);
     });
