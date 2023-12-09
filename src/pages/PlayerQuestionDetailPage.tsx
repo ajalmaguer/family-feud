@@ -2,7 +2,8 @@ import { FunctionComponent } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useQuestionDetails } from '../hooks/useQuestionDetails';
 import { flipAnswerStatus, usePlayerQuestion } from './usePlayerQuestion';
-import { boardPagePath } from './BoardPage';
+import { boardPagePath } from './BoardPage/BoardPage';
+import { calculateEarnedPoints } from '../utils/calculateEarnedPoints';
 
 export function playerQuestionDetailsPagePath(
   playerId: string,
@@ -31,7 +32,11 @@ export const PlayerQuestionDetailPage: FunctionComponent<{}> = () => {
     <div>
       <div>PlayerQuestionDetailPage works</div>
       <div>{question.text}</div>
-      <div>{playerQuestion?.errorCount}</div>
+      <div>Error count: {playerQuestion?.errorCount}</div>
+      <div>
+        Earned points:{' '}
+        {playerQuestion ? calculateEarnedPoints(question, playerQuestion) : 0}
+      </div>
       <div>
         <Link
           target="_blank"
@@ -46,7 +51,10 @@ export const PlayerQuestionDetailPage: FunctionComponent<{}> = () => {
           const answerStatuses = playerQuestion?.answerStatuses;
           const answerStatus = answerStatuses && answerStatuses[i];
           return (
-            <li key={i}>
+            <li
+              key={i}
+              className="border border-red-500 w-[300px] p-2 flex justify-between"
+            >
               {answer.text} - {answer.points}{' '}
               {playerQuestion && (
                 <button
