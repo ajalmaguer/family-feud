@@ -1,8 +1,10 @@
 import { onValue } from 'firebase/database';
 import { FunctionComponent, useEffect, useState } from 'react';
-import { questionsRef } from '../services/firebaseService';
 import { Link } from 'react-router-dom';
+import { questionsRef } from '../services/firebaseService';
 import { questionDetailPagePath } from './QuestionDetailPage';
+import { Modal, useModal } from '../components/Modal';
+import { NewQuestionModal } from '../components/NewQuestionModal';
 
 export function questionListPagePath() {
   return `/questions`;
@@ -10,6 +12,7 @@ export function questionListPagePath() {
 
 export const QuestionListPage: FunctionComponent<{}> = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
+  const newQuestionModal = useModal();
 
   useEffect(() => {
     const unsubscribe = onValue(questionsRef, (snapshot) => {
@@ -31,6 +34,10 @@ export const QuestionListPage: FunctionComponent<{}> = () => {
 
   return (
     <div>
+      <div>
+        <button onClick={newQuestionModal.open}>Add question</button>
+        <NewQuestionModal modalRef={newQuestionModal.ref} />
+      </div>
       <ul>
         {questions.map((question) => (
           <li key={question.id}>
