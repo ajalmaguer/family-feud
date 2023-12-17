@@ -1,14 +1,9 @@
 import { FunctionComponent } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useQuestionDetails } from '../hooks/useQuestionDetails';
-import {
-  flipAnswerStatus,
-  setCurrentGame,
-  usePlayerQuestion,
-} from './usePlayerQuestion';
-import { boardPagePath } from './BoardPage/BoardPage';
 import { calculateEarnedPoints } from '../utils/calculateEarnedPoints';
-import { Button } from '../component-library/Button';
+import { boardPagePath } from './BoardPage/BoardPage';
+import { flipAnswerStatus, usePlayerQuestion } from './usePlayerQuestion';
 
 export function playerQuestionDetailsPagePath(
   playerId: string,
@@ -46,17 +41,11 @@ export const PlayerQuestionDetailPage: FunctionComponent<{}> = () => {
         <Link
           target="_blank"
           rel="noreferrer"
-          to={boardPagePath(playerId, questionId)}
+          to={boardPagePath(playerId)}
           className="btn"
         >
           Open board
         </Link>
-        <Button
-          onClick={() => setCurrentGame({ playerId, questionId })}
-          style="btn-primary"
-        >
-          Send to board
-        </Button>
       </div>
       <ul>
         {question.answers.map((answer, i) => {

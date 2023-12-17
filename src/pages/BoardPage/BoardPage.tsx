@@ -1,21 +1,23 @@
 import { FunctionComponent } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useQuestionDetails } from '../../hooks/useQuestionDetails';
-import { usePlayerQuestion } from '../usePlayerQuestion';
-import { AnswerTile } from './AnswerTile';
 import { calculateEarnedPoints } from '../../utils/calculateEarnedPoints';
+import { usePlayer } from '../usePlayerQuestion';
+import { AnswerTile } from './AnswerTile';
 
-export function boardPagePath(playerId: string, questionId: string) {
-  return `/board?p=${playerId}&q=${questionId}`;
+export function boardPagePath(playerId: string) {
+  return `/board?p=${playerId}`;
 }
 
 export const BoardPage: FunctionComponent<{}> = () => {
   const [searchParams] = useSearchParams();
   const playerId = searchParams.get('p');
-  const questionId = searchParams.get('q');
 
+  const { player } = usePlayer({ playerId });
+  console.log({ player });
+  const questionId = player?.currentQuestion;
   const { question } = useQuestionDetails(questionId);
-  const { playerQuestion } = usePlayerQuestion({ playerId, questionId });
+  const playerQuestion = player && player.questions[questionId || ''];
 
   if (!question || !playerQuestion) {
     return <div>not found</div>;

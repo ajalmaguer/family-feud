@@ -2,6 +2,11 @@ import { child, onValue, set } from 'firebase/database';
 import { useEffect, useState } from 'react';
 import { playersRef } from '../services/firebaseService';
 
+export type Player = {
+  currentQuestion: string;
+  questions: Record<string, PlayerQuestion>;
+};
+
 export type PlayerQuestion = {
   answerStatuses: boolean[];
   errorCount: number;
@@ -77,4 +82,26 @@ export function usePlayerQuestion(params: {
     return unsubscribe;
   }, [playerId, questionId]);
   return { playerQuestion };
+}
+
+function playerRef(playerId: string) {
+  return child(playersRef, `${playerId}`);
+}
+
+export function usePlayer(params: { playerId: string | undefined | null }) {
+  const { playerId } = params;
+  const [player, setPlayer] = useState<Player | null>(null);
+
+  useEffect(() => {
+    if (!playerId) {
+      return;
+    }
+    const unsubscribe = onValue(playerRef(playerId), (snapshot) => {
+      setPlayer(snapshot.val());
+    });
+
+    return unsubscribe;
+  }, [playerId]);
+
+  return { player };
 }
