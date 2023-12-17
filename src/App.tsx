@@ -13,38 +13,41 @@ import {
 } from './pages/PlayerQuestionDetailPage';
 import { BoardPage } from './pages/BoardPage';
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    errorElement: <div>Not found</div>,
-    element: (
-      <div>
-        <div>Family Feud</div>
-        <ul>
-          <li>
-            <Link to={questionListPagePath()}>Question List</Link>
-          </li>
-        </ul>
-      </div>
-    ),
-  },
-  {
-    path: questionListPagePath(),
-    element: <QuestionListPage />,
-  },
-  {
-    path: questionDetailPagePath(':id'),
-    element: <QuestionDetailPage />,
-  },
-  {
-    path: playerQuestionDetailsPagePath(':playerId', ':questionId'),
-    element: <PlayerQuestionDetailPage />,
-  },
-  {
-    path: 'board',
-    element: <BoardPage />,
-  },
-]);
+const router = createBrowserRouter(
+  [
+    {
+      path: '/',
+      errorElement: <div>Not found</div>,
+      element: (
+        <div>
+          <div>Family Feud</div>
+          <ul>
+            <li>
+              <Link to={questionListPagePath()}>Question List</Link>
+            </li>
+          </ul>
+        </div>
+      ),
+    },
+    {
+      path: questionListPagePath(),
+      element: <QuestionListPage />,
+    },
+    {
+      path: questionDetailPagePath(':id'),
+      element: <QuestionDetailPage />,
+    },
+    {
+      path: playerQuestionDetailsPagePath(':playerId', ':questionId'),
+      element: <PlayerQuestionDetailPage />,
+    },
+    {
+      path: 'board',
+      element: <BoardPage />,
+    },
+  ],
+  { basename: '/family-feud' }
+);
 
 export default function App() {
   return (
