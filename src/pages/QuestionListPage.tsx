@@ -36,7 +36,10 @@ export const QuestionListPage: FunctionComponent<{}> = () => {
     <div>
       <div>
         <button onClick={newQuestionModal.open}>Add question</button>
-        <NewQuestionModal modalRef={newQuestionModal.ref} />
+        <NewQuestionModal
+          modalRef={newQuestionModal.ref}
+          onClose={newQuestionModal.close}
+        />
       </div>
       <ul>
         {questions.map((question) => (
