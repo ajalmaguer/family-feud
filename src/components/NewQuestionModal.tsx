@@ -3,6 +3,22 @@ import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
 import { Button } from '../component-library/Button';
 import { Modal } from '../component-library/Modal';
 import { TextInput } from '../component-library/TextInput';
+import { child, push, update } from 'firebase/database';
+import { questionsRef } from '../services/firebaseService';
+
+function addQuestion(question: FormValues) {
+  const res = push(questionsRef, { text: question.question });
+  if (!res.key) {
+    return;
+  }
+
+  update(child(questionsRef, res.key), {
+    answers: question.answers.map(({ text, points }) => ({
+      text,
+      points: Number(points),
+    })),
+  });
+}
 
 type FormValues = {
   question: string;
@@ -38,6 +54,7 @@ export const NewQuestionModal: FunctionComponent<{
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     console.log('submitting', data);
+    addQuestion(data);
   };
 
   return (
@@ -66,31 +83,42 @@ export const NewQuestionModal: FunctionComponent<{
                 />
                 <TextInput
                   label="Points"
-                  inputProps={register(`answers.${index}.points` as const, {
-                    required: true,
-                  })}
+                  inputProps={{
+                    ...register(`answers.${index}.points` as const, {
+                      required: true,
+                    }),
+                    type: 'number',
+                  }}
                   // error={errors?.answers?.[index]?.points}
                 />
-                <Button type="button" onClick={() => removeAnswer(index)}>
+                <Button
+                  type="button"
+                  onClick={() => removeAnswer(index)}
+                  style="btn-error"
+                  outline
+                >
                   DELETE
                 </Button>
               </div>
             );
           })}
-
-          <Button
-            type="button"
-            onClick={() =>
-              appendAnswer({
-                text: '',
-                points: 0,
-              })
-            }
-          >
-            APPEND
+        </div>
+        <Button
+          type="button"
+          onClick={() =>
+            appendAnswer({
+              text: '',
+              points: 0,
+            })
+          }
+        >
+          Add question
+        </Button>
+        <div className="text-right">
+          <Button type="submit" style="btn-primary">
+            Submit
           </Button>
         </div>
-        <Button type="submit">Submit</Button>
       </form>
     </Modal>
   );

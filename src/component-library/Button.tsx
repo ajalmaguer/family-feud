@@ -1,12 +1,17 @@
 import { FunctionComponent, ReactNode } from 'react';
 
 type ButtonStyles =
+  | ''
   | 'btn-neutral'
   | 'btn-primary'
   | 'btn-secondary'
   | 'btn-accent'
   | 'btn-ghost'
-  | 'btn-link';
+  | 'btn-link'
+  | 'btn-info'
+  | 'btn-success'
+  | 'btn-warning'
+  | 'btn-error';
 
 export const Button: FunctionComponent<{
   style?: ButtonStyles;
@@ -14,16 +19,18 @@ export const Button: FunctionComponent<{
   className?: string;
   type?: 'button' | 'submit';
   onClick?: () => void;
+  outline?: boolean;
 }> = ({
-  style = 'btn-primary',
+  style = '',
   children,
   className = '',
   type,
   onClick = () => {},
+  outline,
 }) => {
   return (
     <button
-      className={['btn', style, className].join(' ')}
+      className={['btn', style, className, outline && 'btn-outline'].join(' ')}
       type={type}
       onClick={onClick}
     >
