@@ -30,24 +30,14 @@ export const PlayerQuestionDetailPage: FunctionComponent<{}> = () => {
 
   return (
     <div>
-      <div>PlayerQuestionDetailPage works</div>
-      <div>{question.text}</div>
-      <div>Error count: {playerQuestion?.errorCount}</div>
+      <div className="font-bold text-xl">{question.text}</div>
+      {/* <div>Error count: {playerQuestion?.errorCount}</div> */}
       <div>
         Earned points:{' '}
         {playerQuestion ? calculateEarnedPoints(question, playerQuestion) : 0}
       </div>
-      <div>
-        <Link
-          target="_blank"
-          rel="noreferrer"
-          to={boardPagePath(playerId)}
-          className="btn"
-        >
-          Open board
-        </Link>
-      </div>
-      <ul>
+
+      <ul className="flex flex-col gap-y-8 mb-8">
         {question.answers.map((answer, i) => {
           const answerStatuses = playerQuestion?.answerStatuses;
           const answerStatus = answerStatuses && answerStatuses[i];
@@ -78,6 +68,17 @@ export const PlayerQuestionDetailPage: FunctionComponent<{}> = () => {
           );
         })}
       </ul>
+
+      <div>
+        <Link
+          target="_blank"
+          rel="noreferrer"
+          to={boardPagePath(playerId)}
+          className="btn"
+        >
+          Open board
+        </Link>
+      </div>
     </div>
   );
 };
