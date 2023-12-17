@@ -33,8 +33,8 @@ export const QuestionListPage: FunctionComponent<{}> = () => {
   }, []);
 
   return (
-    <div>
-      <div>
+    <div className='px-4'>
+      <div className='mb-8'>
         <button onClick={newQuestionModal.open}>Add question</button>
         <NewQuestionModal
           modalRef={newQuestionModal.ref}
@@ -43,7 +43,7 @@ export const QuestionListPage: FunctionComponent<{}> = () => {
       </div>
       <ul>
         {questions.map((question) => (
-          <li key={question.id}>
+          <li key={question.id} className='mb-4 border border-gray-500 rounded p-4'>
             <Link to={questionDetailPagePath(question.id)}>
               {question.text}
             </Link>
