@@ -8,7 +8,7 @@ export type PlayerQuestion = {
 };
 
 function playerQuestionRef(playerId: string, questionId: string) {
-  return child(playersRef, `${playerId}/${questionId}`);
+  return child(playersRef, `${playerId}/questions/${questionId}`);
 }
 
 export function createGame(params: {
@@ -22,6 +22,18 @@ export function createGame(params: {
     errorCount: 0,
   };
   set(playerQuestionRef(playerId, questionId), playerQuestion);
+}
+
+function playerCurrentQuestionRef(playerId: string) {
+  return child(playersRef, `${playerId}/currentQuestion`);
+}
+
+export function setCurrentGame(params: {
+  playerId: string;
+  questionId: string;
+}) {
+  const { playerId, questionId } = params;
+  set(playerCurrentQuestionRef(playerId), questionId);
 }
 
 export function flipAnswerStatus(params: {

@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react';
-import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
 import { Button } from '../component-library/Button';
 import { TextInput } from '../component-library/TextInput';
 
@@ -13,16 +13,20 @@ export type FormValues = {
 
 export const QuestionForm: FunctionComponent<{
   onSubmit: (data: FormValues) => void;
-}> = ({ onSubmit }) => {
+  initialValues?: FormValues;
+}> = ({
+  onSubmit,
+  initialValues = {
+    answers: [{ text: '', points: 0 }],
+  },
+}) => {
   const {
     register,
     control,
     handleSubmit,
     // formState
   } = useForm<FormValues>({
-    defaultValues: {
-      answers: [{ text: '', points: 0 }],
-    },
+    defaultValues: initialValues,
     mode: 'onBlur',
   });
   // const { errors } = formState;
@@ -65,7 +69,7 @@ export const QuestionForm: FunctionComponent<{
                     required: true,
                   }),
                   type: 'number',
-                  min: 1
+                  min: 1,
                 }}
                 // error={errors?.answers?.[index]?.points}
               />

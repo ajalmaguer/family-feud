@@ -1,9 +1,14 @@
 import { FunctionComponent } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useQuestionDetails } from '../hooks/useQuestionDetails';
-import { flipAnswerStatus, usePlayerQuestion } from './usePlayerQuestion';
+import {
+  flipAnswerStatus,
+  setCurrentGame,
+  usePlayerQuestion,
+} from './usePlayerQuestion';
 import { boardPagePath } from './BoardPage/BoardPage';
 import { calculateEarnedPoints } from '../utils/calculateEarnedPoints';
+import { Button } from '../component-library/Button';
 
 export function playerQuestionDetailsPagePath(
   playerId: string,
@@ -42,9 +47,16 @@ export const PlayerQuestionDetailPage: FunctionComponent<{}> = () => {
           target="_blank"
           rel="noreferrer"
           to={boardPagePath(playerId, questionId)}
+          className="btn"
         >
           Open board
         </Link>
+        <Button
+          onClick={() => setCurrentGame({ playerId, questionId })}
+          style="btn-primary"
+        >
+          Send to board
+        </Button>
       </div>
       <ul>
         {question.answers.map((answer, i) => {
@@ -53,7 +65,10 @@ export const PlayerQuestionDetailPage: FunctionComponent<{}> = () => {
           return (
             <li
               key={i}
-              className="border border-red-500 w-[300px] p-2 flex justify-between"
+              className={[
+                'border border-red-500 w-[300px] p-2 flex justify-between',
+                answerStatus && 'bg-green-500',
+              ].join(' ')}
             >
               {answer.text} - {answer.points}{' '}
               {playerQuestion && (

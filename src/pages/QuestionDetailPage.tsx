@@ -3,7 +3,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useQuestionDetails } from '../hooks/useQuestionDetails';
 import { playerQuestionDetailsPagePath } from './PlayerQuestionDetailPage';
 import { PlayerIdService } from '../services/playerIdService';
-import { createGame } from './usePlayerQuestion';
+import { createGame, setCurrentGame } from './usePlayerQuestion';
+import { Button } from '../component-library/Button';
+import { Modal, useModal } from '../component-library/Modal';
+import { FormValues, QuestionForm } from '../components/QuestionForm';
 
 export function questionDetailPagePath(id: string) {
   return `/questions/${id}`;
@@ -11,10 +14,16 @@ export function questionDetailPagePath(id: string) {
 
 export const QuestionDetailPage: FunctionComponent<{}> = () => {
   const { id } = useParams<{ id: string }>();
+  const editModal = useModal();
 
   const { question, loading } = useQuestionDetails(id);
 
+  function handleEdit(data: FormValues) {
+    console.log('edit > data =', data);
+  }
+
   const navigate = useNavigate();
+
   function playGame() {
     let playerId = PlayerIdService.getPlayerId();
 
@@ -27,6 +36,8 @@ export const QuestionDetailPage: FunctionComponent<{}> = () => {
       playerId,
       questionId: id,
     });
+
+    setCurrentGame({ playerId, questionId: id });
 
     navigate(playerQuestionDetailsPagePath(playerId, id));
   }
@@ -52,7 +63,22 @@ export const QuestionDetailPage: FunctionComponent<{}> = () => {
           </li>
         ))}
       </ul>
-      <button onClick={playGame}>Play this question</button>
+      <Button style="btn-primary" onClick={playGame}>
+        Play this question
+      </Button>
+      <Button style="btn-secondary" onClick={editModal.open}>
+        Edit
+      </Button>
+      <Modal modalRef={editModal.ref}>
+        <h2>Edit question</h2>
+        <QuestionForm
+          onSubmit={handleEdit}
+          initialValues={{
+            question: question.text,
+            answers: question.answers,
+          }}
+        />
+      </Modal>
     </div>
   );
 };
