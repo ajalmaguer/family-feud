@@ -32,7 +32,7 @@ export const BoardPage: FunctionComponent<{}> = () => {
     <div className="flex justify-center items-center h-screen">
       <div className="">
         <div className="flex justify-center mb-4">
-          <div className="p-4 w-fit border border-red-500">{earnedPointes}</div>
+          <div className="p-4 w-fit border border-blue-400 rounded text-xl">{earnedPointes}</div>
         </div>
         <ul
           className={[

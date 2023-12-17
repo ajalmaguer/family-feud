@@ -8,7 +8,7 @@ export const AnswerTile: FunctionComponent<{
   return (
     <li
       className={[
-        'border border-red-500 ',
+        'border border-blue-400 rounded',
         'p-2 min-w-[300px]',
         empty && 'h-12',
         className,
