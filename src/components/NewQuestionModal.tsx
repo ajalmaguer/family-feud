@@ -8,6 +8,7 @@ import {
 import React, { FunctionComponent, RefObject } from 'react';
 import { Modal } from './Modal';
 import { TextInput } from './TextInput';
+import { Button } from './Button';
 
 type FormValues = {
   question: string;
@@ -43,46 +44,54 @@ export const NewQuestionModal: FunctionComponent<{
   return (
     <Modal modalRef={modalRef}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
+        <div className="flex flex-col gap-y-4 mb-4">
           <TextInput
+            label="Question"
             inputProps={register('question', { required: true })}
             // error={errors?.question}
           />
-        </div>
-        {answerFields.map((field, index) => {
-          return (
-            <div key={field.id}>
-              <TextInput
-                inputProps={register(`answers.${index}.text` as const, {
-                  required: true,
-                })}
-                // error={errors?.answers?.[index]?.test}
-              />
-              <TextInput
-                inputProps={register(`answers.${index}.points` as const, {
-                  required: true,
-                })}
-                // error={errors?.answers?.[index]?.points}
-              />
-              <button type="button" onClick={() => removeAnswer(index)}>
-                DELETE
-              </button>
-            </div>
-          );
-        })}
 
-        <button
-          type="button"
-          onClick={() =>
-            appendAnswer({
-              text: '',
-              points: 0,
-            })
-          }
-        >
-          APPEND
-        </button>
-        <input type="submit" />
+          <div className="font-bold">Answers</div>
+          {answerFields.map((field, index) => {
+            return (
+              <div
+                key={field.id}
+                className="grid grid-cols-[3fr,1fr,1fr] gap-x-4"
+              >
+                <TextInput
+                  label="Answer"
+                  inputProps={register(`answers.${index}.text` as const, {
+                    required: true,
+                  })}
+                  // error={errors?.answers?.[index]?.test}
+                />
+                <TextInput
+                  label="Points"
+                  inputProps={register(`answers.${index}.points` as const, {
+                    required: true,
+                  })}
+                  // error={errors?.answers?.[index]?.points}
+                />
+                <Button type="button" onClick={() => removeAnswer(index)}>
+                  DELETE
+                </Button>
+              </div>
+            );
+          })}
+
+          <Button
+            type="button"
+            onClick={() =>
+              appendAnswer({
+                text: '',
+                points: 0,
+              })
+            }
+          >
+            APPEND
+          </Button>
+        </div>
+        <Button type="submit">Submit</Button>
       </form>
     </Modal>
   );
