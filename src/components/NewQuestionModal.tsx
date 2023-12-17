@@ -1,14 +1,8 @@
-import {
-  useForm,
-  SubmitHandler,
-  useFieldArray,
-  useWatch,
-  Control,
-} from 'react-hook-form';
-import React, { FunctionComponent, RefObject } from 'react';
-import { Modal } from './Modal';
-import { TextInput } from './TextInput';
-import { Button } from './Button';
+import { FunctionComponent, RefObject } from 'react';
+import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
+import { Button } from '../component-library/Button';
+import { Modal } from '../component-library/Modal';
+import { TextInput } from '../component-library/TextInput';
 
 type FormValues = {
   question: string;
@@ -21,13 +15,18 @@ type FormValues = {
 export const NewQuestionModal: FunctionComponent<{
   modalRef: RefObject<HTMLDialogElement>;
 }> = ({ modalRef }) => {
-  const { register, control, handleSubmit, formState } = useForm<FormValues>({
+  const {
+    register,
+    control,
+    handleSubmit,
+    // formState
+  } = useForm<FormValues>({
     defaultValues: {
       answers: [{ text: '', points: 0 }],
     },
     mode: 'onBlur',
   });
-  const { errors } = formState;
+  // const { errors } = formState;
   const {
     fields: answerFields,
     append: appendAnswer,
