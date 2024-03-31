@@ -1,4 +1,4 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useQuestionDetails } from '../../hooks/useQuestionDetails';
 import { calculateEarnedPoints } from '../../utils/calculateEarnedPoints';
@@ -10,6 +10,10 @@ export function boardPagePath(playerId: string) {
 }
 
 export const BoardPage: FunctionComponent<{}> = () => {
+  useEffect(() => {
+    document.title = 'Family Feud | Board';
+  }, []);
+
   const [searchParams] = useSearchParams();
   const playerId = searchParams.get('p');
 

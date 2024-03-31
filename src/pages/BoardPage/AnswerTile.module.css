@@ -34,9 +34,8 @@
   padding: 8px;
 }
 
-.flip-card-front {
-  /* empty for now */
-}
+/* .flip-card-front {
+} */
 
 .flip-card-back {
   background-color: #79bce8;
