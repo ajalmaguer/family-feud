@@ -4,7 +4,7 @@ import { Button } from '../component-library/Button';
 import { useQuestionDetails } from '../hooks/useQuestionDetails';
 import { PlayerIdService } from '../services/playerIdService';
 import { playerQuestionDetailsPagePath } from './PlayerQuestionDetailPage';
-import { createGame, setCurrentGame } from './usePlayerQuestion';
+import { createGame, setCurrentGame, usePlayer } from './usePlayerQuestion';
 import { deleteQuestion } from '../services/questionService';
 
 export function questionDetailPagePath(id: string) {
@@ -14,6 +14,7 @@ export function questionDetailPagePath(id: string) {
 export const QuestionDetailPage: FunctionComponent<{}> = () => {
   const { id } = useParams<{ id: string }>();
   const { question, loading } = useQuestionDetails(id);
+  const { player } = usePlayer({ playerId: PlayerIdService.getPlayerId() });
 
   const navigate = useNavigate();
 
@@ -49,6 +50,9 @@ export const QuestionDetailPage: FunctionComponent<{}> = () => {
   return (
     <div className="p-4">
       <h1 className="text-3xl font-bold underline">{question.text}</h1>
+      {player?.questions[id] && (
+        <div className="text-green-600 italic">Played</div>
+      )}
       <ul>
         {question.answers.map((answer, i) => (
           <li key={i}>

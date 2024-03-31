@@ -3,7 +3,6 @@ import { LocalStorageService } from './localStorageService';
 function getPlayerId() {
   const PLAYER_ID_KEY = 'playerId';
   let playerId = LocalStorageService.getItem(PLAYER_ID_KEY);
-  console.log({ playerId });
 
   if (!playerId) {
     playerId = crypto.randomUUID();

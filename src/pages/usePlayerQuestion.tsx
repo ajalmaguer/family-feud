@@ -12,6 +12,14 @@ export type PlayerQuestion = {
   errorCount: number;
 };
 
+function playerRef(playerId: string) {
+  return child(playersRef, `${playerId}`);
+}
+
+function playerQuestionsRef(playerId: string, questionId: string) {
+  return child(playersRef, `${playerId}/questions`);
+}
+
 function playerQuestionRef(playerId: string, questionId: string) {
   return child(playersRef, `${playerId}/questions/${questionId}`);
 }
@@ -82,10 +90,6 @@ export function usePlayerQuestion(params: {
     return unsubscribe;
   }, [playerId, questionId]);
   return { playerQuestion };
-}
-
-function playerRef(playerId: string) {
-  return child(playersRef, `${playerId}`);
 }
 
 export function usePlayer(params: { playerId: string | undefined | null }) {
