@@ -1,4 +1,4 @@
-import { child, onValue, push, update } from 'firebase/database';
+import { child, onValue, push, update, remove } from 'firebase/database';
 import { questionsRef } from './firebaseService';
 
 export type FormValues = {
@@ -36,14 +36,18 @@ export function addQuestion(question: FormValues) {
     return;
   }
 
-  updateQuestion(res.key, question);
+  return updateQuestion(res.key, question);
 }
 
 export function updateQuestion(questionKey: string, question: FormValues) {
-  update(child(questionsRef, questionKey), {
+  return update(child(questionsRef, questionKey), {
     answers: question.answers.map(({ text, points }) => ({
       text,
       points: Number(points),
     })),
   });
+}
+
+export function deleteQuestion(questionKey: string) {
+  return remove(child(questionsRef, questionKey));
 }

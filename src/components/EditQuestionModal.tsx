@@ -1,20 +1,12 @@
-import { FunctionComponent, useEffect } from 'react';
+import { FunctionComponent } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Modal, useModal } from '../component-library/Modal';
+import { RouteModal } from '../component-library/RouteModal';
 import { QuestionForm } from '../components/QuestionForm';
 import { useQuestionDetails } from '../hooks/useQuestionDetails';
 import { FormValues, updateQuestion } from '../services/questionService';
 
 export const EditQuestionModal: FunctionComponent<{}> = () => {
-  const editModal = useModal();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    editModal.open();
-    return () => {
-      editModal.close();
-    };
-  }, []);
 
   const { id } = useParams<{ id: string }>();
   const { question, loading } = useQuestionDetails(id);
@@ -36,14 +28,7 @@ export const EditQuestionModal: FunctionComponent<{}> = () => {
   }
 
   return (
-    <Modal
-      isOpen={editModal.isOpen}
-      onClose={() => {
-        editModal.close();
-        navigate(-1);
-      }}
-      title={<>Edit question</>}
-    >
+    <RouteModal title={<>Edit question</>}>
       <QuestionForm
         onSubmit={handleEdit}
         initialValues={{
@@ -51,6 +36,6 @@ export const EditQuestionModal: FunctionComponent<{}> = () => {
           answers: question.answers,
         }}
       />
-    </Modal>
+    </RouteModal>
   );
 };

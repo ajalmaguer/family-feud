@@ -4,6 +4,7 @@ import { useModal } from '../component-library/Modal';
 import { NewQuestionModal } from '../components/NewQuestionModal';
 import { getQuestionList } from '../services/questionService';
 import { questionDetailPagePath } from './QuestionDetailPage';
+import { Button } from '../component-library/Button';
 
 export function questionListPagePath() {
   return `/questions`;
@@ -26,14 +27,14 @@ export const QuestionListPage: FunctionComponent<{}> = () => {
   }, []);
 
   return (
-    <div className="px-4">
-      <div className="mb-8">
-        <button onClick={newQuestionModal.open}>Add question</button>
-        <NewQuestionModal
-          isOpen={newQuestionModal.isOpen}
-          onClose={newQuestionModal.close}
-        />
+    <div className="p-4">
+      <div className="mb-8 flex justify-end">
+        <Button onClick={newQuestionModal.open}>Add question</Button>
       </div>
+      <NewQuestionModal
+        isOpen={newQuestionModal.isOpen}
+        onClose={newQuestionModal.close}
+      />
       <ul>
         {questions.map((question) => (
           <li key={question.id}>

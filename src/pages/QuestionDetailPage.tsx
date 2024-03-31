@@ -5,6 +5,7 @@ import { useQuestionDetails } from '../hooks/useQuestionDetails';
 import { PlayerIdService } from '../services/playerIdService';
 import { playerQuestionDetailsPagePath } from './PlayerQuestionDetailPage';
 import { createGame, setCurrentGame } from './usePlayerQuestion';
+import { deleteQuestion } from '../services/questionService';
 
 export function questionDetailPagePath(id: string) {
   return `/questions/${id}`;
@@ -41,7 +42,7 @@ export const QuestionDetailPage: FunctionComponent<{}> = () => {
     return <div>Loading...</div>;
   }
 
-  if (!question) {
+  if (!question || !id) {
     return <div>Question not found</div>;
   }
 
@@ -61,6 +62,20 @@ export const QuestionDetailPage: FunctionComponent<{}> = () => {
       <Link to="edit" relative="path">
         <Button style="btn-secondary">Edit</Button>
       </Link>
+      <Button
+        style="btn-error"
+        onClick={() => {
+          if (
+            confirm('Are you sure you want to delete this question?') === false
+          ) {
+            return;
+          }
+          deleteQuestion(id);
+          navigate('/questions');
+        }}
+      >
+        Delete
+      </Button>
       <Outlet />
     </div>
   );
