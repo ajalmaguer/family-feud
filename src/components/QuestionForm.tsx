@@ -63,6 +63,15 @@ export const QuestionForm: FunctionComponent<{
                   }),
                   type: 'number',
                   min: 1,
+                  onKeyDown: (e) => {
+                    if (e.key === 'Tab' && index === answerFields.length - 1) {
+                      e.preventDefault();
+                      appendAnswer({
+                        text: '',
+                        points: 0,
+                      });
+                    }
+                  },
                 }}
                 // error={errors?.answers?.[index]?.points}
               />
