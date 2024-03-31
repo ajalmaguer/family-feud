@@ -6,7 +6,7 @@ export const AnswerTile: FunctionComponent<{
   back?: ReactNode;
   empty?: boolean;
   flipped?: boolean;
-}> = ({ front, back, empty, flipped }) => {
+}> = ({ front, back, flipped }) => {
   return (
     <li
       className={[styles['flip-card'], flipped && styles['flipped']].join(' ')}
