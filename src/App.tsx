@@ -12,6 +12,7 @@ import {
   QuestionListPage,
   questionListPagePath,
 } from './pages/QuestionListPage';
+import { EditQuestionModal } from './components/EditQuestionModal';
 
 const router = createHashRouter([
   {
@@ -35,6 +36,12 @@ const router = createHashRouter([
   {
     path: questionDetailPagePath(':id'),
     element: <QuestionDetailPage />,
+    children: [
+      {
+        path: 'edit',
+        element: <EditQuestionModal />,
+      },
+    ],
   },
   {
     path: playerQuestionDetailsPagePath(':playerId', ':questionId'),

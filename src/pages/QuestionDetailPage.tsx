@@ -1,12 +1,12 @@
 import { FunctionComponent } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useQuestionDetails } from '../hooks/useQuestionDetails';
-import { playerQuestionDetailsPagePath } from './PlayerQuestionDetailPage';
-import { PlayerIdService } from '../services/playerIdService';
-import { createGame, setCurrentGame } from './usePlayerQuestion';
+import { Link, Outlet, useNavigate, useParams } from 'react-router-dom';
 import { Button } from '../component-library/Button';
 import { Modal, useModal } from '../component-library/Modal';
 import { FormValues, QuestionForm } from '../components/QuestionForm';
+import { useQuestionDetails } from '../hooks/useQuestionDetails';
+import { PlayerIdService } from '../services/playerIdService';
+import { playerQuestionDetailsPagePath } from './PlayerQuestionDetailPage';
+import { createGame, setCurrentGame } from './usePlayerQuestion';
 
 export function questionDetailPagePath(id: string) {
   return `/questions/${id}`;
@@ -66,19 +66,10 @@ export const QuestionDetailPage: FunctionComponent<{}> = () => {
       <Button style="btn-primary" onClick={playGame}>
         Play this question
       </Button>
-      <Button style="btn-secondary" onClick={editModal.open}>
-        Edit
-      </Button>
-      <Modal modalRef={editModal.ref}>
-        <h2>Edit question</h2>
-        <QuestionForm
-          onSubmit={handleEdit}
-          initialValues={{
-            question: question.text,
-            answers: question.answers,
-          }}
-        />
-      </Modal>
+      <Link to="edit" relative='path'>
+        <Button style="btn-secondary">Edit</Button>
+      </Link>
+      <Outlet />
     </div>
   );
 };

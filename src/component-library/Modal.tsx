@@ -1,40 +1,45 @@
-import { FunctionComponent, ReactNode, RefObject, useRef } from 'react';
+import { Dialog } from '@headlessui/react';
+import { FunctionComponent, ReactNode, useState } from 'react';
 
 export function useModal() {
-  const ref = useRef<HTMLDialogElement | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   function open() {
-    if (!ref.current) {
-      return;
-    }
-    ref.current.showModal();
+    setIsOpen(true);
   }
 
   function close() {
-    if (!ref.current) {
-      return;
-    }
-    ref.current.close();
+    setIsOpen(false);
   }
 
-  return { ref, open, close };
+  return { isOpen, open, close };
 }
 
 export const Modal: FunctionComponent<{
-  modalRef: RefObject<HTMLDialogElement>;
-  children: ReactNode;
-}> = ({ modalRef, children }) => {
+  isOpen: boolean;
+  onClose: () => void;
+  title?: ReactNode;
+  description?: ReactNode;
+  children?: ReactNode;
+}> = ({ isOpen, onClose, title, description, children }) => {
   return (
-    <dialog id="my_modal_2" className="modal" ref={modalRef}>
-      <div className="modal-box">
-        <form method="dialog">
-          {/* if there is a button in form, it will close the modal */}
-          <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+    <Dialog open={isOpen} onClose={onClose} className="relative z-50">
+      <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+      <div className="fixed inset-0 flex w-screen items-center justify-center">
+        <Dialog.Panel className="mx-auto max-w-sm rounded bg-white relative p-4">
+          <button
+            className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+            onClick={onClose}
+          >
             ✕
           </button>
-        </form>
-        {children}
+
+          <Dialog.Title>{title}</Dialog.Title>
+          <Dialog.Description>{description}</Dialog.Description>
+
+          {children}
+        </Dialog.Panel>
       </div>
-    </dialog>
+    </Dialog>
   );
 };

@@ -33,18 +33,21 @@ export const QuestionListPage: FunctionComponent<{}> = () => {
   }, []);
 
   return (
-    <div className='px-4'>
-      <div className='mb-8'>
+    <div className="px-4">
+      <div className="mb-8">
         <button onClick={newQuestionModal.open}>Add question</button>
-        <NewQuestionModal
+        {/* <NewQuestionModal
           modalRef={newQuestionModal.ref}
           onClose={newQuestionModal.close}
-        />
+        /> */}
       </div>
       <ul>
         {questions.map((question) => (
-          <li key={question.id} className='mb-4 border border-gray-500 rounded p-4'>
-            <Link to={questionDetailPagePath(question.id)}>
+          <li key={question.id}>
+            <Link
+              to={questionDetailPagePath(question.id)}
+              className="mb-4 border border-gray-500 rounded p-4 block"
+            >
               {question.text}
             </Link>
           </li>
