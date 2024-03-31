@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useModal } from '../component-library/Modal';
 import { questionsRef } from '../services/firebaseService';
 import { questionDetailPagePath } from './QuestionDetailPage';
+import { NewQuestionModal } from '../components/NewQuestionModal';
 
 export function questionListPagePath() {
   return `/questions`;
@@ -35,10 +36,10 @@ export const QuestionListPage: FunctionComponent<{}> = () => {
     <div className="px-4">
       <div className="mb-8">
         <button onClick={newQuestionModal.open}>Add question</button>
-        {/* <NewQuestionModal
-          modalRef={newQuestionModal.ref}
+        <NewQuestionModal
+          isOpen={newQuestionModal.isOpen}
           onClose={newQuestionModal.close}
-        /> */}
+        />
       </div>
       <ul>
         {questions.map((question) => (

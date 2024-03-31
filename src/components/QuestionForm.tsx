@@ -41,7 +41,7 @@ export const QuestionForm: FunctionComponent<{
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="">
-      <div className="flex flex-col gap-y-4 mb-4">
+      <div className="flex flex-col gap-y-2 mb-4">
         <TextInput
           label="Question"
           inputProps={register('question', { required: true })}
@@ -56,7 +56,7 @@ export const QuestionForm: FunctionComponent<{
               className="grid grid-cols-[3fr,1fr,1fr] gap-x-4 items-center"
             >
               <TextInput
-                label="Answer"
+                label={`Answer ${index + 1}`}
                 inputProps={register(`answers.${index}.text` as const, {
                   required: true,
                 })}

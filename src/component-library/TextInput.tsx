@@ -8,7 +8,7 @@ export const TextInput: FunctionComponent<{
   label: string;
 }> = ({ inputProps, label }) => {
   return (
-    <label className="form-control w-full max-w-xs">
+    <label className="form-control w-full">
       <div className="label">
         <span className="label-text">{label}</span>
         {/* <span className="label-text-alt">Top Right label</span> */}
@@ -16,7 +16,7 @@ export const TextInput: FunctionComponent<{
       <input
         type="text"
         placeholder="Type here"
-        className="input input-bordered w-full max-w-xs"
+        className="input input-bordered w-full"
         {...inputProps}
       />
       {/* <div className="label">

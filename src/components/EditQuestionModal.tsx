@@ -1,8 +1,19 @@
+import { child, push, update } from 'firebase/database';
 import { FunctionComponent, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Modal, useModal } from '../component-library/Modal';
-import { QuestionForm } from '../components/QuestionForm';
+import { FormValues, QuestionForm } from '../components/QuestionForm';
 import { useQuestionDetails } from '../hooks/useQuestionDetails';
+import { questionsRef } from '../services/firebaseService';
+
+function updateQuestion(questionKey: string, question: FormValues) {
+  update(child(questionsRef, questionKey), {
+    answers: question.answers.map(({ text, points }) => ({
+      text,
+      points: Number(points),
+    })),
+  });
+}
 
 export const EditQuestionModal: FunctionComponent<{}> = () => {
   const editModal = useModal();
@@ -18,8 +29,12 @@ export const EditQuestionModal: FunctionComponent<{}> = () => {
   const { id } = useParams<{ id: string }>();
   const { question, loading } = useQuestionDetails(id);
 
-  function handleEdit(): void {
-    throw new Error('Function not implemented.');
+  function handleEdit(updatedQuestion: FormValues): void {
+    if (!id || !question) {
+      return;
+    }
+    updateQuestion(id, updatedQuestion);
+    navigate(-1);
   }
 
   if (loading) {

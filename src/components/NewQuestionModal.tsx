@@ -19,11 +19,11 @@ function addQuestion(question: FormValues) {
 }
 
 export const NewQuestionModal: FunctionComponent<{
-  modalRef: RefObject<HTMLDialogElement>;
+  isOpen: boolean;
   onClose?: () => void;
-}> = ({ modalRef, onClose = () => {} }) => {
+}> = ({ isOpen, onClose = () => {} }) => {
   return (
-    <Modal modalRef={modalRef}>
+    <Modal isOpen={isOpen} onClose={onClose}>
       <QuestionForm
         onSubmit={(data) => {
           addQuestion(data);
