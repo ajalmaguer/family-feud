@@ -47,7 +47,7 @@ export const QuestionDetailPage: FunctionComponent<{}> = () => {
   }
 
   return (
-    <div>
+    <div className="p-4">
       <h1 className="text-3xl font-bold underline">{question.text}</h1>
       <ul>
         {question.answers.map((answer, i) => (
@@ -56,26 +56,34 @@ export const QuestionDetailPage: FunctionComponent<{}> = () => {
           </li>
         ))}
       </ul>
-      <Button style="btn-primary" onClick={playGame}>
-        Play this question
-      </Button>
-      <Link to="edit" relative="path">
-        <Button style="btn-secondary">Edit</Button>
-      </Link>
-      <Button
-        style="btn-error"
-        onClick={() => {
-          if (
-            confirm('Are you sure you want to delete this question?') === false
-          ) {
-            return;
-          }
-          deleteQuestion(id);
-          navigate('/questions');
-        }}
-      >
-        Delete
-      </Button>
+      <div className="flex justify-between">
+        <div className="flex gap-2">
+          <Button style="btn-primary" onClick={playGame}>
+            Play this question
+          </Button>
+          <Link to="edit" relative="path">
+            <Button style="btn-secondary">Edit</Button>
+          </Link>
+        </div>
+        <div>
+          <Button
+            style="btn-error"
+            onClick={() => {
+              if (
+                confirm('Are you sure you want to delete this question?') ===
+                false
+              ) {
+                return;
+              }
+              deleteQuestion(id);
+              navigate('/questions');
+            }}
+          >
+            Delete
+          </Button>
+        </div>
+      </div>
+
       <Outlet />
     </div>
   );
