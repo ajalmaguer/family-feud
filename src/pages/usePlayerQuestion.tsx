@@ -16,12 +16,12 @@ function playerRef(playerId: string) {
   return child(playersRef, `${playerId}`);
 }
 
-function playerQuestionsRef(playerId: string, questionId: string) {
+function playerQuestionsRef(playerId: string) {
   return child(playersRef, `${playerId}/questions`);
 }
 
 function playerQuestionRef(playerId: string, questionId: string) {
-  return child(playersRef, `${playerId}/questions/${questionId}`);
+  return child(playerQuestionsRef(playerId), `/${questionId}`);
 }
 
 export function createGame(params: {
