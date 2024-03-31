@@ -3,7 +3,12 @@ import { Link, useParams } from 'react-router-dom';
 import { useQuestionDetails } from '../hooks/useQuestionDetails';
 import { calculateEarnedPoints } from '../utils/calculateEarnedPoints';
 import { boardPagePath } from './BoardPage/BoardPage';
-import { flipAnswerStatus, usePlayerQuestion } from './usePlayerQuestion';
+import {
+  flipAnswerStatus,
+  setErrorCount,
+  usePlayerQuestion,
+} from './usePlayerQuestion';
+import { Button } from '../component-library/Button';
 
 export function playerQuestionDetailsPagePath(
   playerId: string,
@@ -20,6 +25,7 @@ export const PlayerQuestionDetailPage: FunctionComponent<{}> = () => {
 
   const { question } = useQuestionDetails(questionId);
   const { playerQuestion } = usePlayerQuestion({ playerId, questionId });
+  const errorCount = playerQuestion?.errorCount || 0;
 
   // ----------------------------------------
   // render
@@ -28,8 +34,26 @@ export const PlayerQuestionDetailPage: FunctionComponent<{}> = () => {
     return <>Not found</>;
   }
 
+  const handleMinusError = () => {
+    if (errorCount === 0) {
+      return;
+    }
+
+    setErrorCount({
+      playerId,
+      questionId,
+      errorCount: errorCount - 1,
+    });
+  };
+
+  const handlePlusError = () => {
+    setErrorCount({ playerId, questionId, errorCount: errorCount + 1 });
+  };
+
+  console.log({ playerQuestion, errorCount });
+
   return (
-    <div>
+    <div className="p-4">
       <div className="font-bold text-xl">{question.text}</div>
       {/* <div>Error count: {playerQuestion?.errorCount}</div> */}
       <div>
@@ -69,6 +93,10 @@ export const PlayerQuestionDetailPage: FunctionComponent<{}> = () => {
         })}
       </ul>
 
+      <div className="flex justify-between mb-8">
+        <Button onClick={handleMinusError}>- error</Button>
+        <Button onClick={handlePlusError}>+ error</Button>
+      </div>
       <div>
         <Link
           target="_blank"

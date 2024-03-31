@@ -22,6 +22,7 @@ export const BoardPage: FunctionComponent<{}> = () => {
   const questionId = player?.currentQuestion;
   const { question } = useQuestionDetails(questionId);
   const playerQuestion = player && player.questions[questionId || ''];
+  const errorArray = Array.from({ length: playerQuestion?.errorCount || 0 });
 
   if (!question || !playerQuestion) {
     return <div>not found</div>;
@@ -34,12 +35,13 @@ export const BoardPage: FunctionComponent<{}> = () => {
 
   return (
     <div className="flex justify-center items-center h-screen">
-      <div className="">
+      <div className="space-y-4">
         <div className="flex justify-center mb-4">
           <div className="p-4 w-fit border border-blue-400 rounded text-xl">
             {earnedPointes}
           </div>
         </div>
+
         <ul
           className={[
             'flex flex-col',
@@ -68,6 +70,18 @@ export const BoardPage: FunctionComponent<{}> = () => {
             <AnswerTile key={i} empty></AnswerTile>
           ))}
         </ul>
+
+        <div className="flex justify-center">
+          <ul className="flex flex-row gap-4 min-h-4">
+            {errorArray.length === 0 ? (
+              <li className="w-4 h-4 rounded-full"></li>
+            ) : (
+              errorArray.map((_, i) => (
+                <li key={i} className="w-4 h-4 bg-red-600 rounded-full"></li>
+              ))
+            )}
+          </ul>
+        </div>
       </div>
     </div>
   );

@@ -24,6 +24,10 @@ function playerQuestionRef(playerId: string, questionId: string) {
   return child(playerQuestionsRef(playerId), `/${questionId}`);
 }
 
+function playerCurrentQuestionRef(playerId: string) {
+  return child(playersRef, `${playerId}/currentQuestion`);
+}
+
 export function createGame(params: {
   question: Question;
   playerId: string;
@@ -35,10 +39,6 @@ export function createGame(params: {
     errorCount: 0,
   };
   set(playerQuestionRef(playerId, questionId), playerQuestion);
-}
-
-function playerCurrentQuestionRef(playerId: string) {
-  return child(playersRef, `${playerId}/currentQuestion`);
 }
 
 export function setCurrentGame(params: {
@@ -65,6 +65,15 @@ export function flipAnswerStatus(params: {
       return status;
     }),
   });
+}
+
+export function setErrorCount(params: {
+  playerId: string;
+  questionId: string;
+  errorCount: number;
+}) {
+  const { playerId, questionId, errorCount } = params;
+  set(child(playerQuestionRef(playerId, questionId), 'errorCount'), errorCount);
 }
 
 export function usePlayerQuestion(params: {
