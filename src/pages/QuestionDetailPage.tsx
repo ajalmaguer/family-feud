@@ -1,8 +1,6 @@
 import { FunctionComponent } from 'react';
 import { Link, Outlet, useNavigate, useParams } from 'react-router-dom';
 import { Button } from '../component-library/Button';
-import { Modal, useModal } from '../component-library/Modal';
-import { FormValues, QuestionForm } from '../components/QuestionForm';
 import { useQuestionDetails } from '../hooks/useQuestionDetails';
 import { PlayerIdService } from '../services/playerIdService';
 import { playerQuestionDetailsPagePath } from './PlayerQuestionDetailPage';
@@ -15,10 +13,6 @@ export function questionDetailPagePath(id: string) {
 export const QuestionDetailPage: FunctionComponent<{}> = () => {
   const { id } = useParams<{ id: string }>();
   const { question, loading } = useQuestionDetails(id);
-
-  function handleEdit(data: FormValues) {
-    console.log('edit > data =', data);
-  }
 
   const navigate = useNavigate();
 

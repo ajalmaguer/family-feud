@@ -73,14 +73,18 @@ export const QuestionForm: FunctionComponent<{
                 }}
                 // error={errors?.answers?.[index]?.points}
               />
-              <Button
-                type="button"
-                onClick={() => removeAnswer(index)}
-                style="btn-error"
-                outline
-              >
-                Delete
-              </Button>
+
+              <div>
+                <div className="mb-2">&nbsp;</div>
+                <Button
+                  type="button"
+                  onClick={() => removeAnswer(index)}
+                  style="btn-error"
+                  outline
+                >
+                  Delete
+                </Button>
+              </div>
             </div>
           );
         })}

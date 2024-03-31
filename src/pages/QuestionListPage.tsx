@@ -2,7 +2,6 @@ import { onValue } from 'firebase/database';
 import { FunctionComponent, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useModal } from '../component-library/Modal';
-import { NewQuestionModal } from '../components/NewQuestionModal';
 import { questionsRef } from '../services/firebaseService';
 import { questionDetailPagePath } from './QuestionDetailPage';
 
