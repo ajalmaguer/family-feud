@@ -50,8 +50,6 @@ export const PlayerQuestionDetailPage: FunctionComponent<{}> = () => {
     setErrorCount({ playerId, questionId, errorCount: errorCount + 1 });
   };
 
-  console.log({ playerQuestion, errorCount });
-
   return (
     <div className="p-4">
       <div className="font-bold text-xl">{question.text}</div>
@@ -93,6 +91,7 @@ export const PlayerQuestionDetailPage: FunctionComponent<{}> = () => {
         })}
       </ul>
 
+      <div>errorCount = {errorCount}</div>
       <div className="flex justify-between mb-8">
         <Button onClick={handleMinusError}>- error</Button>
         <Button onClick={handlePlusError}>+ error</Button>
