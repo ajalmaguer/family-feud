@@ -27,7 +27,7 @@ export const QuestionListPage: FunctionComponent<{}> = () => {
   }, []);
 
   return (
-    <div className="p-4">
+    <div className="p-4 max-w-5xl">
       <div className="mb-8 flex justify-end">
         <Button onClick={newQuestionModal.open}>Add question</Button>
       </div>

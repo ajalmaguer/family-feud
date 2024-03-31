@@ -35,11 +35,13 @@ export const QuestionForm: FunctionComponent<{
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="">
       <div className="flex flex-col gap-y-2 mb-4">
-        <TextInput
-          label="Question"
-          inputProps={register('question', { required: true })}
-          // error={errors?.question}
-        />
+        <div className="mb-2">
+          <TextInput
+            label="Question"
+            inputProps={register('question', { required: true })}
+            // error={errors?.question}
+          />
+        </div>
 
         <div className="font-bold">Answers</div>
         {answerFields.map((field, index) => {
@@ -64,6 +66,9 @@ export const QuestionForm: FunctionComponent<{
                   type: 'number',
                   min: 1,
                   onKeyDown: (e) => {
+                    if (e.shiftKey) {
+                      return;
+                    }
                     if (e.key === 'Tab' && index === answerFields.length - 1) {
                       e.preventDefault();
                       appendAnswer({
