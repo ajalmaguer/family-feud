@@ -1,10 +1,9 @@
-import { onValue } from 'firebase/database';
 import { FunctionComponent, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useModal } from '../component-library/Modal';
-import { questionsRef } from '../services/firebaseService';
-import { questionDetailPagePath } from './QuestionDetailPage';
 import { NewQuestionModal } from '../components/NewQuestionModal';
+import { getQuestionList } from '../services/questionService';
+import { questionDetailPagePath } from './QuestionDetailPage';
 
 export function questionListPagePath() {
   return `/questions`;
@@ -15,13 +14,7 @@ export const QuestionListPage: FunctionComponent<{}> = () => {
   const newQuestionModal = useModal();
 
   useEffect(() => {
-    const unsubscribe = onValue(questionsRef, (snapshot) => {
-      const questions = Object.entries(snapshot.val()).map(([key, value]) => {
-        return {
-          ...(value as { text: string; answers: Answer[] }),
-          id: key,
-        };
-      });
+    const unsubscribe = getQuestionList((questions) => {
       setQuestions(questions);
     });
 

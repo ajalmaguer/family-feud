@@ -1,19 +1,9 @@
-import { child, push, update } from 'firebase/database';
 import { FunctionComponent, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Modal, useModal } from '../component-library/Modal';
-import { FormValues, QuestionForm } from '../components/QuestionForm';
+import { QuestionForm } from '../components/QuestionForm';
 import { useQuestionDetails } from '../hooks/useQuestionDetails';
-import { questionsRef } from '../services/firebaseService';
-
-function updateQuestion(questionKey: string, question: FormValues) {
-  update(child(questionsRef, questionKey), {
-    answers: question.answers.map(({ text, points }) => ({
-      text,
-      points: Number(points),
-    })),
-  });
-}
+import { FormValues, updateQuestion } from '../services/questionService';
 
 export const EditQuestionModal: FunctionComponent<{}> = () => {
   const editModal = useModal();

@@ -2,14 +2,7 @@ import { FunctionComponent } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { Button } from '../component-library/Button';
 import { TextInput } from '../component-library/TextInput';
-
-export type FormValues = {
-  question: string;
-  answers: {
-    text: string;
-    points: number;
-  }[];
-};
+import { FormValues } from '../services/questionService';
 
 export const QuestionForm: FunctionComponent<{
   onSubmit: (data: FormValues) => void;

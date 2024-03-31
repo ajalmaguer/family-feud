@@ -1,6 +1,5 @@
-import { onValue, child } from 'firebase/database';
-import { useState, useEffect } from 'react';
-import { questionsRef } from '../services/firebaseService';
+import { useEffect, useState } from 'react';
+import { getQuestion } from '../services/questionService';
 
 export function useQuestionDetails(id: string | undefined | null) {
   const [question, setQuestion] = useState<Question>();
@@ -11,8 +10,8 @@ export function useQuestionDetails(id: string | undefined | null) {
     }
     setLoading(true);
 
-    const unsubscribe = onValue(child(questionsRef, id), (snapshot) => {
-      setQuestion(snapshot.val());
+    const unsubscribe = getQuestion(id, (question) => {
+      setQuestion(question);
       setLoading(false);
     });
 

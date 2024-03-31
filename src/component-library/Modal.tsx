@@ -36,6 +36,7 @@ export const Modal: FunctionComponent<{
             <button
               className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
               onClick={onClose}
+              tabIndex={-1}
             >
               ✕
             </button>
