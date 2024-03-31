@@ -42,7 +42,7 @@ export const EditQuestionModal: FunctionComponent<{}> = () => {
         editModal.close();
         navigate(-1);
       }}
-      title={<h2>Edit question</h2>}
+      title={<>Edit question</>}
     >
       <QuestionForm
         onSubmit={handleEdit}
