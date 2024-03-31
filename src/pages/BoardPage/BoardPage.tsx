@@ -14,7 +14,7 @@ export const BoardPage: FunctionComponent<{}> = () => {
   const playerId = searchParams.get('p');
 
   const { player } = usePlayer({ playerId });
-  console.log({ player });
+
   const questionId = player?.currentQuestion;
   const { question } = useQuestionDetails(questionId);
   const playerQuestion = player && player.questions[questionId || ''];
@@ -32,7 +32,9 @@ export const BoardPage: FunctionComponent<{}> = () => {
     <div className="flex justify-center items-center h-screen">
       <div className="">
         <div className="flex justify-center mb-4">
-          <div className="p-4 w-fit border border-blue-400 rounded text-xl">{earnedPointes}</div>
+          <div className="p-4 w-fit border border-blue-400 rounded text-xl">
+            {earnedPointes}
+          </div>
         </div>
         <ul
           className={[
@@ -45,16 +47,17 @@ export const BoardPage: FunctionComponent<{}> = () => {
             const answerStatuses = playerQuestion?.answerStatuses;
             const answerStatus = answerStatuses && answerStatuses[i];
             return (
-              <AnswerTile key={i}>
-                {answerStatus ? (
+              <AnswerTile
+                key={i}
+                flipped={answerStatus}
+                back={
                   <div className="flex justify-between">
                     <div>{answer.text}</div>
                     <div>{answer.points}</div>
                   </div>
-                ) : (
-                  <div className="text-center">{i + 1}</div>
-                )}
-              </AnswerTile>
+                }
+                front={<div className="text-center">{i + 1}</div>}
+              ></AnswerTile>
             );
           })}
           {emptyTiles.map((_, i) => (

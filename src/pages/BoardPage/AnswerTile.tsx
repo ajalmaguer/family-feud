@@ -1,20 +1,24 @@
 import { FunctionComponent, ReactNode } from 'react';
+import styles from './AnswerTile.module.css';
 
 export const AnswerTile: FunctionComponent<{
-  className?: string;
-  children?: ReactNode;
+  front?: ReactNode;
+  back?: ReactNode;
   empty?: boolean;
-}> = ({ className = '', children, empty }) => {
+  flipped?: boolean;
+}> = ({ front, back, empty, flipped }) => {
   return (
     <li
-      className={[
-        'border border-blue-400 rounded',
-        'p-2 min-w-[300px]',
-        empty && 'h-12',
-        className,
-      ].join(' ')}
+      className={[styles['flip-card'], flipped && styles['flipped']].join(' ')}
     >
-      {children}
+      <div className={styles['flip-card-inner']}>
+        <div className={styles['flip-card-front']}>
+          <div className="w-full">{front}</div>
+        </div>
+        <div className={styles['flip-card-back']}>
+          <div className="w-full">{back}</div>
+        </div>
+      </div>
     </li>
   );
 };
