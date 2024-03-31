@@ -24,21 +24,28 @@ export const Modal: FunctionComponent<{
 }> = ({ isOpen, onClose, title, description, children }) => {
   return (
     <Dialog open={isOpen} onClose={onClose} className="relative z-50">
+      {/* backdrop */}
       <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-      <div className="fixed inset-0 flex w-screen items-center justify-center">
-        <Dialog.Panel className="mx-auto max-w-sm rounded bg-white relative p-4">
-          <button
-            className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-            onClick={onClose}
-          >
-            ✕
-          </button>
 
-          <Dialog.Title>{title}</Dialog.Title>
-          <Dialog.Description>{description}</Dialog.Description>
+      {/* Full-screen scrollable container */}
+      <div className="fixed inset-0 w-screen overflow-y-auto">
+        {/* Container to center the panel */}
+        <div className="flex min-h-full items-center justify-center p-4">
+          {/* The actual dialog panel  */}
+          <Dialog.Panel className="mx-auto max-w-lg rounded bg-white relative p-4">
+            <button
+              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+              onClick={onClose}
+            >
+              ✕
+            </button>
 
-          {children}
-        </Dialog.Panel>
+            <Dialog.Title>{title}</Dialog.Title>
+            <Dialog.Description>{description}</Dialog.Description>
+
+            {children}
+          </Dialog.Panel>
+        </div>
       </div>
     </Dialog>
   );

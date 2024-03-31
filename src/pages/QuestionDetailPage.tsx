@@ -14,8 +14,6 @@ export function questionDetailPagePath(id: string) {
 
 export const QuestionDetailPage: FunctionComponent<{}> = () => {
   const { id } = useParams<{ id: string }>();
-  const editModal = useModal();
-
   const { question, loading } = useQuestionDetails(id);
 
   function handleEdit(data: FormValues) {
@@ -66,7 +64,7 @@ export const QuestionDetailPage: FunctionComponent<{}> = () => {
       <Button style="btn-primary" onClick={playGame}>
         Play this question
       </Button>
-      <Link to="edit" relative='path'>
+      <Link to="edit" relative="path">
         <Button style="btn-secondary">Edit</Button>
       </Link>
       <Outlet />

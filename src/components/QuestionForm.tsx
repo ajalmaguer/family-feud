@@ -40,7 +40,7 @@ export const QuestionForm: FunctionComponent<{
   });
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} className="">
       <div className="flex flex-col gap-y-4 mb-4">
         <TextInput
           label="Question"
@@ -53,7 +53,7 @@ export const QuestionForm: FunctionComponent<{
           return (
             <div
               key={field.id}
-              className="grid grid-cols-[3fr,1fr,1fr] gap-x-4"
+              className="grid grid-cols-[3fr,1fr,1fr] gap-x-4 items-center"
             >
               <TextInput
                 label="Answer"
@@ -79,7 +79,7 @@ export const QuestionForm: FunctionComponent<{
                 style="btn-error"
                 outline
               >
-                DELETE
+                Delete
               </Button>
             </div>
           );

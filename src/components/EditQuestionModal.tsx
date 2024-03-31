@@ -1,7 +1,8 @@
 import { FunctionComponent, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Modal, useModal } from '../component-library/Modal';
 import { QuestionForm } from '../components/QuestionForm';
+import { useQuestionDetails } from '../hooks/useQuestionDetails';
 
 export const EditQuestionModal: FunctionComponent<{}> = () => {
   const editModal = useModal();
@@ -11,15 +12,23 @@ export const EditQuestionModal: FunctionComponent<{}> = () => {
     editModal.open();
     return () => {
       editModal.close();
-      // navigate(-1);
     };
   }, []);
+
+  const { id } = useParams<{ id: string }>();
+  const { question, loading } = useQuestionDetails(id);
 
   function handleEdit(): void {
     throw new Error('Function not implemented.');
   }
 
-  const question = {} as any;
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!question) {
+    return <div>Question not found</div>;
+  }
 
   return (
     <Modal
